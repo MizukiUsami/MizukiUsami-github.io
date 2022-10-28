@@ -11,6 +11,18 @@
         <content type="html"><![CDATA[<img src="1.png" alt="1" style="zoom:80%;" />]]></content>
       
       
+      <categories>
+          
+          <category> 测试 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> test </tag>
+            
+        </tags>
       
     </entry>
     
@@ -24,6 +36,18 @@
         <content type="html"><![CDATA[<img src="1.png" alt="1" style="zoom:80%;" /><p>插入图片时，前缀 <b>\</b> 也该去掉</p>]]></content>
       
       
+      <categories>
+          
+          <category> 测试 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> test </tag>
+            
+        </tags>
       
     </entry>
     
@@ -37,6 +61,18 @@
         <content type="html"><![CDATA[<p>这是一个测试文件，这里有一个图片，宽度为1：</p><img src="/2022/10/26/test/1.png" class="" width="1">]]></content>
       
       
+      <categories>
+          
+          <category> 测试 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> test </tag>
+            
+        </tags>
       
     </entry>
     
