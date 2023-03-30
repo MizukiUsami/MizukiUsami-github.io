@@ -4,6 +4,106 @@
   
     
     <entry>
+      <title>滑动窗口-单调队列</title>
+      <link href="/2023/03/30/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3-%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97/"/>
+      <url>/2023/03/30/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3-%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97/</url>
+      
+        <content type="html"><![CDATA[<h2 id="单调队列"><a href="#单调队列" class="headerlink" title="单调队列"></a>单调队列</h2><p>单调队列的基本思想是，维护一个双向队列（deque），遍历序列，仅当一个元素<strong>可能</strong>成为某个区间最值时才保留它。</p><p>一般在对头放最大值或者最小值。</p><p>基本流程（以最小值为例）：滑动窗口遍历数组，从队尾放入数据，若队列中从队尾到对头有比该数大的数，则弹出。在滑动窗口移动过程中，若pre指针（滑动窗口前向指针）指向的数&#x3D;&#x3D;队头元素，则该次滑动窗口移动之后弹出队头元素。</p><p>例子：<a href="https://www.lanqiao.cn/problems/2415/learning/?page=1&first_category_id=1&sort=pass_rate&category_id=3&tags=2023&difficulty=30">附近最小 - 蓝桥云课 (lanqiao.cn)</a></p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;deque&gt;</span> <span class="comment">//双端队列</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line">cin &gt;&gt; n;</span><br><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">a</span><span class="params">(n + <span class="number">1</span>, <span class="number">0</span>)</span></span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">&#123;</span><br><span class="line">cin &gt;&gt; a[i];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> k;</span><br><span class="line">cin &gt;&gt; k;</span><br><span class="line"><span class="comment">//滑动窗口、单调队列</span></span><br><span class="line"></span><br><span class="line">deque&lt;<span class="type">int</span>&gt; deq;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> back = <span class="number">1</span>; back &lt;= n + k; back++) <span class="comment">//从back位置开始一个个扫描添加到双端队列中</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="type">int</span> pre = back - <span class="number">2</span> * k;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (back &lt;= n)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">while</span> (!deq.<span class="built_in">empty</span>() &amp;&amp; deq.<span class="built_in">back</span>() &gt; a[back])</span><br><span class="line">&#123;</span><br><span class="line">deq.<span class="built_in">pop_back</span>(); <span class="comment">//尾部大于当前添加的就弹出去</span></span><br><span class="line">&#125;</span><br><span class="line">deq.<span class="built_in">push_back</span>(a[back]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (pre - <span class="number">1</span> &gt;= <span class="number">1</span> &amp;&amp; !deq.<span class="built_in">empty</span>() &amp;&amp; deq.<span class="built_in">front</span>() == a[pre - <span class="number">1</span>]) <span class="comment">//用上一次的指向来进行对比，为什么不用该次呢？因为该次pre指向元素还在窗口内。</span></span><br><span class="line">&#123;</span><br><span class="line">deq.<span class="built_in">pop_front</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (back &gt; k) <span class="comment">//但是需要back到达初试位置（即1+k）之后，再进行最小值的输出</span></span><br><span class="line">cout &lt;&lt; deq.<span class="built_in">front</span>() &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>以最大值为例的视频讲解：<a href="https://www.bilibili.com/video/BV1XS4y1p7qj/?spm_id_from=333.337.search-card.all.click&vd_source=d978901fca1f9c4ec4151a9d124fee2d">单调队列正式登场！| LeetCode：239. 滑动窗口最大值_哔哩哔哩_bilibili</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 数据结构与程序设计 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 单调队列 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>DFS扩充数位</title>
+      <link href="/2022/11/14/DFS%E6%89%A9%E5%85%85%E6%95%B0%E4%BD%8D/"/>
+      <url>/2022/11/14/DFS%E6%89%A9%E5%85%85%E6%95%B0%E4%BD%8D/</url>
+      
+        <content type="html"><![CDATA[<p><a href="https://www.luogu.com.cn/problem/P8825">P8825 [传智杯 #3 初赛] 运气 - 洛谷 | 计算机科学教育新生态 (luogu.com.cn)</a></p><p>题解：这里面就通过DFS来扩充数位。将上一个数*10+i然后递交给下一层DFS，以达到扩充数位，待数位到达指定长度后对其进行处理。</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> ll long long </span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">ll n, k, cnt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> x, ll sum)</span> </span>&#123;<span class="comment">//当前位数，当前搜索的数</span></span><br><span class="line"><span class="keyword">if</span> (x == n) &#123;<span class="comment">//位数到了</span></span><br><span class="line"><span class="keyword">if</span> (sum % k == <span class="number">0</span>) cnt++;<span class="comment">//如果满足条件就计数器加一</span></span><br><span class="line"><span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">6</span>; i++) <span class="built_in">dfs</span>(x + <span class="number">1</span>, sum * <span class="number">10</span> + i); <span class="comment">//位数加一，在后面补数</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line"><span class="built_in">dfs</span>(<span class="number">0</span>, <span class="number">0</span>);<span class="comment">//从0位数，当前数为0开始搜索</span></span><br><span class="line">cout &lt;&lt; cnt % <span class="number">1000000007</span>;<span class="comment">//记得取模</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 数据结构与程序设计 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> DFS </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>传智杯-传送门</title>
+      <link href="/2022/11/11/%E4%BC%A0%E6%99%BA%E6%9D%AF-%E4%BC%A0%E9%80%81%E9%97%A8/"/>
+      <url>/2022/11/11/%E4%BC%A0%E6%99%BA%E6%9D%AF-%E4%BC%A0%E9%80%81%E9%97%A8/</url>
+      
+        <content type="html"><![CDATA[<p>题目：<a href="https://www.luogu.com.cn/problem/P6464">P6464 [传智杯 #2 决赛] 传送门 - 洛谷 | 计算机科学教育新生态 (luogu.com.cn)</a></p><p>思路：先用Floyd算法求出所有点之间的最短路径距离，得到A矩阵（由于不需要求具体路径，所有不需要Path矩阵）。然后挨个去设置开启传送门的两点。设置之后分别将两点设置为中转点，再去遍历A矩阵，更新每两个点之间的最短路径距离，然后总的和，求出所有和里面最小的那个，就是题目所求。</p><p>代码：</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;climits&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line">cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">graph</span>(n, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n, <span class="number">1e9</span>));</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">&#123;</span><br><span class="line">graph[i][i] = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; i++)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">int</span> x, y, w;</span><br><span class="line">cin &gt;&gt; x &gt;&gt; y &gt;&gt; w;</span><br><span class="line">graph[x - <span class="number">1</span>][y - <span class="number">1</span>] = w;</span><br><span class="line">graph[y - <span class="number">1</span>][x - <span class="number">1</span>] = w;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> region Floyd算法</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> v = <span class="number">0</span>; v &lt; n; v++)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; j++)</span><br><span class="line">&#123;</span><br><span class="line">graph[i][j] = <span class="built_in">min</span>(graph[i][j], graph[i][v] + graph[v][j]);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> endregion</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">long</span> dis = INT_MAX;</span><br><span class="line"></span><br><span class="line">vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; A;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> j = i + <span class="number">1</span>; j &lt; n; j++) <span class="comment">//i,j为遍历选择建立传送门的两点</span></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">A = graph; <span class="comment">//重置A数组</span></span><br><span class="line"></span><br><span class="line">A[i][j] = A[j][i] = <span class="number">0</span>;  <span class="comment">//设置i，j两点开启传送门，距离重置为0 </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//以i点为中转点，更改最短路径</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> k1 = <span class="number">0</span>; k1 &lt; n; k1++)</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> k2 = <span class="number">0</span>; k2 &lt; n; k2++)</span><br><span class="line">A[k1][k2] = <span class="built_in">min</span>(A[k1][k2], A[k1][i] + A[i][k2]);</span><br><span class="line"></span><br><span class="line"><span class="comment">//以j点为中转点，更改最短路径</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> k1 = <span class="number">0</span>; k1 &lt; n; k1++)</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> k2 = <span class="number">0</span>; k2 &lt; n; k2++)</span><br><span class="line">A[k1][k2] = <span class="built_in">min</span>(A[k1][k2], A[k1][j] + A[j][k2]);</span><br><span class="line"></span><br><span class="line"><span class="type">long</span> res = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> k1 = <span class="number">0</span>; k1 &lt; n; k1++)</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> k2 = k1 + <span class="number">1</span>; k2 &lt; n; k2++)</span><br><span class="line">res += A[k1][k2];<span class="comment">//遍历矩阵的上三角或者下三角求和（因为题目说单边只统计一次）</span></span><br><span class="line">dis = <span class="built_in">min</span>(dis, res);</span><br><span class="line">&#125;</span><br><span class="line">cout &lt;&lt; dis;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 数据结构与程序设计 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 传智杯 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>C++取整</title>
+      <link href="/2022/11/07/C++%E5%8F%96%E6%95%B4/"/>
+      <url>/2022/11/07/C++%E5%8F%96%E6%95%B4/</url>
+      
+        <content type="html"><![CDATA[<p>C++的四舍五入函数比较：<br>对含有小数点的数进行四舍五入是比较普遍的一种需求。在C++中也有类似的取整函数。在C++的cmath头文件中有floor()和ceil()函数，还有round()函数。这三个函数的作用如下：</p><table><thead><tr><th>函数名称</th><th>函数说明</th><th>2.1</th><th>2.9</th><th>-2.1</th><th>-2.9</th></tr></thead><tbody><tr><td>floor()</td><td>向下取整</td><td>2</td><td>2</td><td>-3</td><td>-3</td></tr><tr><td>ceil()</td><td>向上取整</td><td>3</td><td>3</td><td>-2</td><td>-2</td></tr><tr><td>round()</td><td>四舍五入</td><td>2</td><td>3</td><td>-2</td><td>-3</td></tr></tbody></table>]]></content>
+      
+      
+      <categories>
+          
+          <category> C++ </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>局部全排列问题</title>
       <link href="/2022/11/02/%E5%B1%80%E9%83%A8%E5%85%A8%E6%8E%92%E5%88%97%E9%97%AE%E9%A2%98/"/>
       <url>/2022/11/02/%E5%B1%80%E9%83%A8%E5%85%A8%E6%8E%92%E5%88%97%E9%97%AE%E9%A2%98/</url>
@@ -71,56 +171,6 @@
         <tags>
             
             <tag> 数据结构与程序设计 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>it</title>
-      <link href="/2022/10/27/it/"/>
-      <url>/2022/10/27/it/</url>
-      
-        <content type="html"><![CDATA[<img src="1.png" alt="1" style="zoom:80%;" />]]></content>
-      
-      
-      <categories>
-          
-          <category> 测试 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> test </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>imagetest</title>
-      <link href="/2022/10/27/imagetest/"/>
-      <url>/2022/10/27/imagetest/</url>
-      
-        <content type="html"><![CDATA[<img src="1.png" alt="1" style="zoom:80%;" /><p>插入图片时，前缀 <b>\</b> 也该去掉</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> 测试 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> test </tag>
             
         </tags>
       
