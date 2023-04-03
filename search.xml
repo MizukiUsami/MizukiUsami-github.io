@@ -4,6 +4,56 @@
   
     
     <entry>
+      <title>gitee提交无贡献解决方案</title>
+      <link href="/2023/04/03/gitee%E6%8F%90%E4%BA%A4%E6%97%A0%E8%B4%A1%E7%8C%AE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
+      <url>/2023/04/03/gitee%E6%8F%90%E4%BA%A4%E6%97%A0%E8%B4%A1%E7%8C%AE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
+      
+        <content type="html"><![CDATA[<p>gitee提交的贡献度计算需要本地和远程的用户名&amp;提交邮箱对应上，如果对应不上就无法计算贡献。</p><img src="/2023/04/03/gitee%E6%8F%90%E4%BA%A4%E6%97%A0%E8%B4%A1%E7%8C%AE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/image-20230403104335728.png" class="" title="image-20230403104335728"><p>只需要在设置-邮箱管理把提交邮箱设置和本地相同即可。后面就能有贡献了</p><p>针对之前提交的，如果想恢复，有一下两步：</p><p>1.在项目目录下右键使用git bash here（确保安装了git），然后输入以下命令</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">git filter-branch -f --env-filter &#x27;</span><br><span class="line">OLD_EMAIL=&quot;原来的邮箱&quot;</span><br><span class="line">CORRECT_NAME=&quot;现在的名字&quot;</span><br><span class="line">CORRECT_EMAIL=&quot;现在的邮箱&quot;</span><br><span class="line">if [ &quot;$GIT_COMMITTER_EMAIL&quot; = &quot;$OLD_EMAIL&quot; ]</span><br><span class="line">then</span><br><span class="line">    export GIT_COMMITTER_NAME=&quot;$CORRECT_NAME&quot;</span><br><span class="line">    export GIT_COMMITTER_EMAIL=&quot;$CORRECT_EMAIL&quot;</span><br><span class="line">fi</span><br><span class="line">if [ &quot;$GIT_AUTHOR_EMAIL&quot; = &quot;$OLD_EMAIL&quot; ]</span><br><span class="line">then</span><br><span class="line">    export GIT_AUTHOR_NAME=&quot;$CORRECT_NAME&quot;</span><br><span class="line">    export GIT_AUTHOR_EMAIL=&quot;$CORRECT_EMAIL&quot;</span><br><span class="line">fi</span><br><span class="line">&#x27; --tag-name-filter cat -- --branches --tags</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>2.强制推送</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -f</span><br></pre></td></tr></table></figure><p>结果：</p><img src="/2023/04/03/gitee%E6%8F%90%E4%BA%A4%E6%97%A0%E8%B4%A1%E7%8C%AE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/image-20230403105242953.png" class="" title="image-20230403105242953"><p>参考：<a href="https://blog.csdn.net/muxuen/article/details/129002612">【Git】如何修改本地仓库的用户名和邮箱_git修改本地仓库名_慕雪华年的博客-CSDN博客</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> git </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> gitee </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>springcloud笔记</title>
+      <link href="/2023/03/31/springcloud%E7%AC%94%E8%AE%B0/"/>
+      <url>/2023/03/31/springcloud%E7%AC%94%E8%AE%B0/</url>
+      
+        <content type="html"><![CDATA[<h1 id="SpringCloud相关组件-amp-对应大致功能记录"><a href="#SpringCloud相关组件-amp-对应大致功能记录" class="headerlink" title="SpringCloud相关组件&amp;对应大致功能记录"></a>SpringCloud相关组件&amp;对应大致功能记录</h1><h2 id="Eureka"><a href="#Eureka" class="headerlink" title="Eureka"></a><strong><font color=red>Eureka</font></strong></h2><p>Eureka 是 Netflix 公司开源的一款服务发现框架，用于实现微服务架构中的服务注册与发现。它提供了一种简单的方式，让微服务应用可以自动地注册自己的信息（如 IP 地址、端口号、服务名称等），并通过 Eureka 服务器进行管理和发现。</p><p>在 Eureka 中，每一个微服务应用都可以作为一个服务实例，注册到 Eureka 服务器上。服务实例可以动态地进行注册、下线、心跳等操作，同时 Eureka 服务器也会自动地检查这些服务实例的状态，并提供服务发现的接口，让其他服务消费者能够轻松地发现和访问这些服务。</p><p>Eureka 的架构中包含两个核心组件：Eureka 服务器和 Eureka 客户端。Eureka 服务器负责管理所有的服务实例信息，而 Eureka 客户端则负责将自己注册到 Eureka 服务器上，并向服务器发送心跳包以保持自己的状态更新。</p><p>Eureka 的主要特点包括：</p><ul><li>易于使用和扩展：Eureka 提供了简单的 RESTful API 接口，易于使用和扩展，可以与其他技术和框架结合使用。</li><li>高可用和可靠性：Eureka 的服务器集群具有高可用性和可靠性，可以防止单点故障，并提供自我修复和自我保护机制。</li><li>实时的服务发现：Eureka 的客户端实时地向服务器更新自己的状态，并提供实时的服务发现和负载均衡功能。</li><li>易于集成和配置：Eureka 可以与其他微服务组件和技术（如 Spring Cloud、Zuul、Ribbon 等）轻松集成，也提供了丰富的配置选项和扩展点。</li></ul><p>总的来说，Eureka 是实现微服务架构中服务注册和发现的重要组件之一，具有简单、可靠、实时和易于扩展等特点，是微服务架构中不可或缺的一部分</p><img src="/2023/03/31/springcloud%E7%AC%94%E8%AE%B0/image-20230331153054473.png" class="" title="image-20230331153054473"><h2 id="Ribbon"><a href="#Ribbon" class="headerlink" title="Ribbon"></a><strong><font color=red>Ribbon</font></strong></h2><p>是 <em><strong><font color=green>@LoadBalanced</font></strong></em>   进行负载均衡的原理。</p><p>使用 LoadBalanced 注解可以将 RestTemplate 实例变成一个 Ribbon 负载均衡客户端。Ribbon 是 Spring Cloud 中实现负载均衡的一个组件，它可以根据特定的负载均衡策略，将请求分发到不同的服务实例上。</p><img src="/2023/03/31/springcloud%E7%AC%94%E8%AE%B0/image-20230331153426859.png" class="" title="image-20230331153426859"><p>实际流程中简单来说就是<strong>先对请求进行拦截，根据请求的url找到服务名，然后去eureka中拉取服务列表，然后使用负载均衡策略进行列表服务器url选择，然后向真正的url去请求数据</strong></p><img src="/2023/03/31/springcloud%E7%AC%94%E8%AE%B0/image-20230331154757221.png" class="" title="image-20230331154757221"><h2 id="Nacos"><a href="#Nacos" class="headerlink" title="Nacos"></a><strong><font color=red>Nacos</font></strong></h2><p>与eureka类型，但比eureka功能更多。</p><p>默认账号&amp;密码都是”nacos”</p><p><strong>nacos与eureka区别：</strong></p><p>1.服务提供者分为临时实例（默认）与非临时实例，采用不同方式来检测是否还存活</p><p>2.服务消费者不仅会定时拉取服务pull（与eureka相同），注册中心还会主动推送变更消息</p><img src="/2023/03/31/springcloud%E7%AC%94%E8%AE%B0/image-20230401124217085.png" class="" title="image-20230401124217085"><img src="/2023/03/31/springcloud%E7%AC%94%E8%AE%B0/image-20230401123720372.png" class="" title="image-20230401123720372">]]></content>
+      
+      
+      <categories>
+          
+          <category> java后端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SpringCloud </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>uni.shotoast真机不显示</title>
       <link href="/2023/03/31/uni-shotoast%E7%9C%9F%E6%9C%BA%E4%B8%8D%E6%98%BE%E7%A4%BA/"/>
       <url>/2023/03/31/uni-shotoast%E7%9C%9F%E6%9C%BA%E4%B8%8D%E6%98%BE%E7%A4%BA/</url>
