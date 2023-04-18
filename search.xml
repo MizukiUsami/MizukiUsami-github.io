@@ -8,7 +8,7 @@
       <link href="/2023/04/18/mybaitsplus%E5%88%86%E9%A1%B5%E6%8F%92%E4%BB%B6%E5%8E%9F%E7%90%86/"/>
       <url>/2023/04/18/mybaitsplus%E5%88%86%E9%A1%B5%E6%8F%92%E4%BB%B6%E5%8E%9F%E7%90%86/</url>
       
-        <content type="html"><![CDATA[<p>分页插件的原理:<br>首先分页参数放到ThreadLocal中，拦截执行的sql,根据数据库类型添加对应的分页语句重写sq|,例如: (select *<br>from table where a)转换为(select count(*) from table where a)和(select * from table where a limit )<br>计算出了total总条数、pageNum当前第几页、pageSize每 页大小和当前页的数据，是否为首页，是否为尾页,总<br>页数等。</p><img src="/logo.svg" alt="img" style="zoom: 25%;" />]]></content>
+        <content type="html"><![CDATA[<p>分页插件的原理:<br>首先分页参数放到ThreadLocal中，拦截执行的sql,根据数据库类型添加对应的分页语句重写sq|,例如: (select *<br>from table where a)转换为(select count(*) from table where a)和(select * from table where a limit )<br>计算出了total总条数、pageNum当前第几页、pageSize每 页大小和当前页的数据，是否为首页，是否为尾页,总<br>页数等。</p><img src="logo.svg" alt="img" style="zoom: 25%;" />]]></content>
       
       
       <categories>
