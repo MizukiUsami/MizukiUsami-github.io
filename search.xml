@@ -233,7 +233,7 @@
       <link href="/2022/11/01/hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
       <url>/2022/11/01/hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</url>
       
-        <content type="html"><![CDATA[<p>1.<a href="https://zhuanlan.zhihu.com/p/132823826">使用hexo新建、编辑并预览文章 - 知乎 (zhihu.com)</a></p><p>2.<a href="https://zhuanlan.zhihu.com/p/134492757">Hexo 生成永久文章链接 - 知乎 (zhihu.com)</a></p><p>3.<a href="https://zhuanlan.zhihu.com/p/265077468">hexo博客如何插入图片 - 知乎 (zhihu.com)</a></p><p>4.<a href="https://blog.csdn.net/qq_43857095/article/details/108306164">Hexo butterfly 自定义文章封面 &amp;&amp; 主页顶部图片更改_hexo文章封面_Moqiqiuzi的博客-CSDN博客</a></p><p>5.<a href="https://blog.csdn.net/wangqingchuan92/article/details/111557770">【个人网站搭建】Hexo框架下添加README.md 及部署到 GitHub.io显示格式错误解决方法_hexo readme.md变成readme.html_wangqingchuan92的博客-CSDN博客</a></p>]]></content>
+        <content type="html"><![CDATA[<p>1.<a href="https://zhuanlan.zhihu.com/p/132823826">使用hexo新建、编辑并预览文章 - 知乎 (zhihu.com)</a></p><p>2.<a href="https://zhuanlan.zhihu.com/p/134492757">Hexo 生成永久文章链接 - 知乎 (zhihu.com)</a></p><p>3.<a href="https://zhuanlan.zhihu.com/p/265077468">hexo博客如何插入图片 - 知乎 (zhihu.com)</a></p><p>4.<a href="https://blog.csdn.net/qq_43857095/article/details/108306164">Hexo butterfly 自定义文章封面 &amp;&amp; 主页顶部图片更改_hexo文章封面_Moqiqiuzi的博客-CSDN博客</a></p><p>5.<a href="https://blog.csdn.net/wangqingchuan92/article/details/111557770">【个人网站搭建】Hexo框架下添加README.md 及部署到 GitHub.io显示格式错误解决方法_hexo readme.md变成readme.html_wangqingchuan92的博客-CSDN博客</a></p><p>6.我的blog当前引入图片的情况下，在使用typora中image标签时，url最前面会默认有一个 <strong><font color="red">&#x2F;</font></strong> ，在typora中有或没有**&#x2F;<strong>并无影响，但是在hexo把markdown转换成html文件之后，如果有</strong>&#x2F;<strong>，则图片无法显示。所以最好手动去除该</strong>&#x2F;**</p>]]></content>
       
       
       <categories>
