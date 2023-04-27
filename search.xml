@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>事务</title>
+      <link href="/2023/04/27/%E4%BA%8B%E5%8A%A1/"/>
+      <url>/2023/04/27/%E4%BA%8B%E5%8A%A1/</url>
+      
+        <content type="html"><![CDATA[<p>事务是指一组操作，被视为一个单独的、不可分割的工作单元，它要么完全执行，要么完全不执行。事务主要是为了确保数据库操作的一致性和可靠性，可以避免由于并发操作而导致的数据不一致的问题。</p><p>在关系型数据库中，事务通常具有四个特性，也被称为ACID特性：</p><ol><li>Atomicity（原子性）：事务是一个不可分割的工作单元，要么全部执行成功，要么全部执行失败，不存在部分执行成功或失败的情况。</li><li>Consistency（一致性）：事务执行前和执行后，数据库的状态必须保持一致。</li><li>Isolation（隔离性）：事务的执行不能相互影响，一个事务的执行结果不能被其他事务看到，直到事务提交。</li><li>Durability（持久性）：一旦事务提交，其执行结果就是永久性的，即使系统发生故障也不会丢失。</li></ol><p>在Java中，事务可以通过使用Spring事务管理器来实现。使用Spring事务管理器，我们可以通过注解的方式将一个方法标记为事务性的，这样在执行该方法时，如果发生异常，则会回滚所有操作。在Spring中，使用<font color="red">@Transactional</font>注解可以将一个方法标记为事务性的。同时，Spring还提供了多种事务传播属性和隔离级别的设置，以便我们根据需要进行配置。</p><p>如果只对单表进行<font color="orange">读操作，通常不需要添加事务</font>。但如果操作包括对单表进行的<font color="orange">写操作，即使只有一张表，建议添加事务</font>以确保数据的一致性和完整性。此外，如果<font color="orange">多个操作需要保证原子性（要么全部成功，要么全部失败），也需要添加事务</font>。</p><p><font color="red">@Transactional注解只有在AOP代理对象调用的情况下才能生效</font>。通过@Autowire注入的bean则都是代理对象</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java后端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 事务 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>mybaitsplus分页插件原理</title>
       <link href="/2023/04/18/mybaitsplus%E5%88%86%E9%A1%B5%E6%8F%92%E4%BB%B6%E5%8E%9F%E7%90%86/"/>
       <url>/2023/04/18/mybaitsplus%E5%88%86%E9%A1%B5%E6%8F%92%E4%BB%B6%E5%8E%9F%E7%90%86/</url>
