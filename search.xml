@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Nacos</title>
+      <link href="/2023/07/12/Nacos/"/>
+      <url>/2023/07/12/Nacos/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Nacos"><a href="#Nacos" class="headerlink" title="Nacos"></a>Nacos</h1><h2 id="作为注册中心："><a href="#作为注册中心：" class="headerlink" title="作为注册中心："></a>作为注册中心：</h2><p>Nacos 文档地址： <a href="https://nacos.io/zh-cn/docs/quick-start.html">https://nacos.io/zh-cn/docs/quick-start.html</a></p><p><strong>1.首先需要下载nacos中间件（nacos-server）并启动</strong></p><p><strong>2.引入注册中心依赖后，在配置文件中配置Nacos Server地址与微服务应用名（即可将微服务注册到Nacos）</strong></p><p>pom.xml：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure><p>application.properties(后续会直接把该配置放在nacos中):</p><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.cloud.nacos.discovery.server-addr</span>=<span class="string">127.0.0.1:8848  #nacos地址</span></span><br><span class="line"><span class="attr">spring.application.name</span>=<span class="string">service-provider #微服务名称</span></span><br><span class="line"><span class="attr">server.port</span>=<span class="string">8000 #微服务端口</span></span><br></pre></td></tr></table></figure><p><strong>3.在启动类上使用@EnableDiscoveryClient 开启服务注册发现功能</strong></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableDiscoveryClient</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProviderApplication</span> &#123;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">SpringApplication.run(Application.class, args);</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><strong>4.启动应用，观察 nacos 服务列表是否已经注册上服务</strong></p><h2 id="作为配置中心："><a href="#作为配置中心：" class="headerlink" title="作为配置中心："></a>作为配置中心：</h2><p><strong>1.引入配置中心依赖</strong></p><p>pom.xml:</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-config<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure><p><strong>2.在bootstrap中配置nacos config信息</strong></p><p>bootstrap.properties:</p><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.application.name</span>=<span class="string">nacos-config-example</span></span><br><span class="line"><span class="attr">spring.cloud.nacos.config.server-addr</span>=<span class="string">127.0.0.1:8848</span></span><br></pre></td></tr></table></figure><p><strong>3.在nacos中添加配置</strong></p><p>相关注解：</p><p>@RefreshScope：动态获取并刷新配置 </p><p>@Value(“${配置项的名}”)：获取配置的数据</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> SpringCloud </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> nacos </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Redis</title>
       <link href="/2023/06/01/Redis/"/>
       <url>/2023/06/01/Redis/</url>
