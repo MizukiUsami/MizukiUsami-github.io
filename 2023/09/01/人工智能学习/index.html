@@ -1,0 +1,300 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>人工智能学习 | mizukiusami</title><meta name="author" content="mizukiusami"><meta name="copyright" content="mizukiusami"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Sigmoid Function          pytorch训练代码示例训练： 12345678910111213141516171819202122232425262728# 循环执行每个 epoch，进行多次训练迭代for epoch in range(n_epochs):    # 将模型设置为训练模式，启用一些训练时的操作（如 dropout 和批量归一化）（此外还有评估模式）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="人工智能学习">
+<meta property="og:url" content="https://mizukiusami.github.io/2023/09/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="mizukiusami">
+<meta property="og:description" content="Sigmoid Function          pytorch训练代码示例训练： 12345678910111213141516171819202122232425262728# 循环执行每个 epoch，进行多次训练迭代for epoch in range(n_epochs):    # 将模型设置为训练模式，启用一些训练时的操作（如 dropout 和批量归一化）（此外还有评估模式）">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://w.wallhaven.cc/full/7p/wallhaven-7p9pp9.jpg">
+<meta property="article:published_time" content="2023-09-01T13:09:52.000Z">
+<meta property="article:modified_time" content="2023-10-04T08:55:04.000Z">
+<meta property="article:author" content="mizukiusami">
+<meta property="article:tag" content="人工智能学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://w.wallhaven.cc/full/7p/wallhaven-7p9pp9.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://mizukiusami.github.io/2023/09/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AD%A6%E4%B9%A0/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '人工智能学习',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-10-04 16:55:04'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+
+if (false) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://w.wallhaven.cc/full/7p/wallhaven-7p9pp9.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">mizukiusami</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">人工智能学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-09-01T13:09:52.000Z" title="发表于 2023-09-01 21:09:52">2023-09-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-10-04T08:55:04.000Z" title="更新于 2023-10-04 16:55:04">2023-10-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AD%A6%E4%B9%A0/">人工智能学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="人工智能学习"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Sigmoid-Function"><a href="#Sigmoid-Function" class="headerlink" title="Sigmoid Function"></a>Sigmoid Function</h1><img src="image-20230821165824986.png" alt="image-20230821165824986" style="zoom: 33%;" />
+
+<img src="image-20230821170030887.png" alt="image-20230821170030887" style="zoom: 33%;" />
+
+<img src="image-20230821170641467.png" alt="image-20230821170641467" style="zoom: 33%;" />
+
+<img src="image-20230821211743593.png" alt="image-20230821211743593" style="zoom: 33%;" />
+
+<img src="image-20230821212339068.png" alt="image-20230821212339068" style="zoom: 33%;" />
+
+<h1 id="pytorch训练代码示例"><a href="#pytorch训练代码示例" class="headerlink" title="pytorch训练代码示例"></a>pytorch训练代码示例</h1><p>训练：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 循环执行每个 epoch，进行多次训练迭代</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(n_epochs):</span><br><span class="line">    <span class="comment"># 将模型设置为训练模式，启用一些训练时的操作（如 dropout 和批量归一化）（此外还有评估模式）</span></span><br><span class="line">    model.train()</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 在每个 epoch 内遍历训练数据集</span></span><br><span class="line">    <span class="keyword">for</span> x, y <span class="keyword">in</span> tr_set:</span><br><span class="line">        <span class="comment"># 在每个训练迭代开始前，清空优化器中的梯度</span></span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 将输入数据 x 和标签 y 移动到指定的设备上（例如 GPU）</span></span><br><span class="line">        x, y = x.to(device), y.to(device)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 前向传播：通过模型计算输入 x 的预测值</span></span><br><span class="line">        pred = model(x)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 计算损失函数：通过比较预测值 pred 和真实标签 y 计算损失</span></span><br><span class="line">        loss = criterion(pred, y)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 反向传播：通过计算损失的梯度来更新模型参数</span></span><br><span class="line">        loss.backward()</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 使用优化器更新模型参数：根据计算得到的梯度更新参数</span></span><br><span class="line">        optimizer.step()</span><br><span class="line">        </span><br><span class="line">    <span class="comment"># 一轮 epoch 结束后，打印当前 epoch 的损失</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Epoch [<span class="subst">&#123;epoch+<span class="number">1</span>&#125;</span>/<span class="subst">&#123;n_epochs&#125;</span>], Loss: <span class="subst">&#123;loss.item():<span class="number">.4</span>f&#125;</span>&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>评估：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将模型设置为评估模式</span></span><br><span class="line">model.<span class="built_in">eval</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化总损失为0</span></span><br><span class="line">total_loss = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 遍历验证数据集</span></span><br><span class="line"><span class="keyword">for</span> x, y <span class="keyword">in</span> dv_set:</span><br><span class="line">    <span class="comment"># 将输入数据 x 和标签 y 移动到指定的设备上（例如 GPU）</span></span><br><span class="line">    x, y = x.to(device), y.to(device)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 在评估模式下，使用 torch.no_grad() 上下文管理器，以防止梯度计算和参数更新</span></span><br><span class="line">    <span class="comment"># 上下文管理器用于包裹一段代码，在其中禁用梯度计算。这对于在不需要梯度的情况下运行代码，如模型评估或测试。</span></span><br><span class="line">    <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">        <span class="comment"># 前向传播：通过模型计算输入 x 的预测值</span></span><br><span class="line">        pred = model(x)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 计算损失函数：通过比较预测值 pred 和真实标签 y 计算损失</span></span><br><span class="line">        loss = criterion(pred, y)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 累计总损失</span></span><br><span class="line">    <span class="comment">#loss.cpu().item() 是一个用于从 GPU 上的张量中获取标量值的操作。让我为你解释一下每个部分的含义：</span></span><br><span class="line">    <span class="comment">#loss: 这是一个 PyTorch 张量（tensor），表示计算得到的损失值。这个张量可能存储在 GPU 上，具体取决于你的运算环境。</span></span><br><span class="line">    <span class="comment">#loss.cpu(): 这是将损失张量从 GPU 移动到 CPU 的操作。在 GPU 上执行操作可能会比较慢，因此在不需要进行后续 GPU 计算的情况下，将张量移回 CPU 可以提高效率。</span></span><br><span class="line">    <span class="comment">#loss.cpu().item(): 这是将 CPU 上的张量转换为 Python 标量（普通的数值类型）。.item() 方法用于从单个元素的张量中提取标量值。</span></span><br><span class="line">    total_loss += loss.cpu().item() * <span class="built_in">len</span>(x)</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算平均损失</span></span><br><span class="line">avg_loss = total_loss / <span class="built_in">len</span>(dv_set.dataset)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>预测：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将模型设置为评估模式</span></span><br><span class="line">model.<span class="built_in">eval</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化一个空列表来存储预测值</span></span><br><span class="line">preds = []</span><br><span class="line"></span><br><span class="line"><span class="comment"># 遍历测试数据集 tt_set</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> tt_set:</span><br><span class="line">    <span class="comment"># 将输入数据 x 移动到指定的设备上（例如 GPU）</span></span><br><span class="line">    x = x.to(device)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 在评估模式下，使用 torch.no_grad() 上下文管理器，以防止梯度计算和参数更新</span></span><br><span class="line">    <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">        <span class="comment"># 前向传播：通过模型计算输入 x 的预测值</span></span><br><span class="line">        pred = model(x)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 将预测值 pred 收集到列表 preds 中</span></span><br><span class="line">        preds.append(pred.cpu().clone())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 现在 preds 列表中存储了所有测试样本的预测值</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="NN"><a href="#NN" class="headerlink" title="NN"></a>NN</h1><img src="image-20230823145815603.png" alt="image-20230823145815603" style="zoom: 33%;" />
+
+<p>W1 ， X， b1都表示列向量</p>
+<img src="image-20230823145847192.png" alt="image-20230823145847192" style="zoom: 33%;" />
+
+<h1 id="前向传播与反向传播"><a href="#前向传播与反向传播" class="headerlink" title="前向传播与反向传播"></a>前向传播与反向传播</h1><img src="image-20230824113633164.png" alt="image-20230824113633164" style="zoom: 33%;" />
+
+<p>反向传播算法就是神经网络中加速计算参数梯度值的算法</p>
+<h1 id="分类与回归比较"><a href="#分类与回归比较" class="headerlink" title="分类与回归比较"></a>分类与回归比较</h1><img src="image-20230825212928965.png" alt="image-20230825212928965" style="zoom: 33%;" />
+
+<p>在神经网络中，无论是用于分类还是回归，许多基本的组件和原则是相同的。然而，在一些细节上，分类问题和回归问题可能会有一些不同之处。以下是一些可能在分类问题中与回归问题有所不同的方面：</p>
+<ol>
+<li><strong>输出层激活函数：</strong> 在分类问题中，输出层通常会使用适当的激活函数，例如Sigmoid或Softmax，以确保输出在0到1之间，且可以解释为概率或类别概率分布。而在回归问题中，输出层可能不需要激活函数，直接输出数值。</li>
+<li><strong>损失函数：</strong> 分类问题通常使用交叉熵损失（Cross-Entropy Loss）作为损失函数（pytorch中，使用crossentropy会自动在最后一层添加softmax，而不需要手动再去添加），用于衡量模型输出的类别概率与实际标签之间的差异。而回归问题可能会使用均方误差（Mean Squared Error）等损失函数。</li>
+<li><strong>评价指标：</strong> 在分类问题中，评价指标通常包括准确率、精确率、召回率、F1分数等，用于衡量模型在不同类别上的性能。在回归问题中，常用的评价指标包括均方根误差（RMSE）、平均绝对误差（MAE）等。</li>
+<li><strong>标签表示：</strong> 在分类问题中，标签通常是离散的类别标识，例如0、1、2等。而在回归问题中，标签通常是连续的数值。</li>
+<li><strong>数据平衡：</strong> 分类问题中可能存在类别不平衡的情况，即某些类别的样本数量远多于其他类别。这可能需要在训练过程中采取一些方法来处理不平衡的数据分布。</li>
+</ol>
+<p>尽管存在一些差异，但许多神经网络的核心概念和训练流程仍然是相似的。无论是分类问题还是回归问题，都需要进行数据预处理、构建模型架构、定义损失函数、选择优化器等步骤。因此，你可以在掌握了基本的神经网络知识后，根据问题的特点适当地进行调整和应用。</p>
+<img src="image-20230905203455881.png" alt="image-20230905203455881" style="zoom: 33%;" />
+
+
+
+<h1 id="多分类"><a href="#多分类" class="headerlink" title="多分类"></a>多分类</h1><img src="image-20230826105432002.png" alt="image-20230826105432002" style="zoom: 33%;" />
+
+
+
+<h1 id="损失函数的选择"><a href="#损失函数的选择" class="headerlink" title="损失函数的选择"></a>损失函数的选择</h1><p>选择适当的损失函数取决于你的任务类型和问题特点。不同的任务可能需要不同的损失函数来衡量模型预测与真实标签之间的差异。以下是一些常见的任务和对应的损失函数选择：</p>
+<ol>
+<li><strong>回归任务：</strong><ul>
+<li>均方误差（Mean Squared Error，MSE）：用于衡量连续数值预测的平均差异。</li>
+<li>平均绝对误差（Mean Absolute Error，MAE）：类似于MSE，但是是绝对值的平均差异。</li>
+<li>Huber损失：平衡了MSE和MAE，对于异常值更具鲁棒性。</li>
+</ul>
+</li>
+<li><strong>分类任务：</strong><ul>
+<li>交叉熵损失（Cross-Entropy Loss）：适用于多分类和二分类问题，可以测量模型输出分布与真实标签分布之间的差异。</li>
+<li>Hinge损失：适用于支持向量机（SVM）和二分类问题，对错误分类的惩罚更大。</li>
+<li>Focal损失：处理类别不平衡问题，通过调整样本权重来降低容易分类的样本的影响。</li>
+</ul>
+</li>
+<li><strong>生成模型任务：</strong><ul>
+<li>对抗性损失（Adversarial Loss）：用于生成对抗网络（GANs），使生成器和判别器之间的平衡。</li>
+<li>KL散度损失（KL Divergence Loss）：适用于变分自编码器（VAEs），用于学习潜在空间分布。</li>
+</ul>
+</li>
+<li><strong>序列任务：</strong><ul>
+<li>负对数似然损失（Negative Log-Likelihood Loss，NLL）：适用于序列生成任务，如语言模型。</li>
+</ul>
+</li>
+</ol>
+<p>选择损失函数时，需要考虑任务的特点，例如输出类型（连续数值、分类类别等）、数据分布、模型性能的关注点（偏向哪个错误类型）、样本不平衡等。在实践中，你可以尝试不同的损失函数，并通过验证集的性能来确定哪个损失函数最适合你的任务。</p>
+<h1 id="逻辑回归的局限性破局"><a href="#逻辑回归的局限性破局" class="headerlink" title="逻辑回归的局限性破局"></a>逻辑回归的局限性破局</h1><img src="image-20230826110215129.png" alt="image-20230826110215129" style="zoom: 33%;" />
+
+<p>第一层全连接作为特征转换，第二层对转换好的特征进行分类</p>
+<p>特征转换是一种在解决逻辑回归的局限性方面常用的策略之一。通过对原始特征进行变换或组合，可以使逻辑回归模型更好地适应非线性关系和复杂数据分布。特征转换的方法包括多项式特征、交互特征、指数变换等。</p>
+<p>特征转换的作用是将原始特征空间映射到一个更适合线性模型的新特征空间，从而扩展逻辑回归的表达能力。这可以通过以下方式解决逻辑回归的一些局限性：</p>
+<ol>
+<li><strong>非线性问题：</strong> 通过引入多项式特征或其他非线性变换，可以让逻辑回归模型学习非线性关系。</li>
+<li><strong>高维特征：</strong> 特征转换可以将高维特征投影到低维特征空间，从而减少维度的影响，提高模型的泛化能力。</li>
+<li><strong>特征相关性：</strong> 特征转换可以帮助减少特征之间的相关性，提高模型的稳定性。</li>
+<li><strong>非均衡数据：</strong> 特征转换可以使不平衡数据更均衡，从而改善模型在少数类别上的性能。</li>
+</ol>
+<p>需要注意的是，特征转换也可能引入一些新的问题，如维度灾难（curse of dimensionality）和过拟合。因此，在进行特征转换时需要谨慎选择合适的方法，并结合交叉验证等技术来评估模型的性能和泛化能力。特征转换通常是数据预处理的一部分，可以帮助提升逻辑回归模型的性能，但并不总是能够完全克服逻辑回归的所有局限性。</p>
+<h1 id="实验结果原因"><a href="#实验结果原因" class="headerlink" title="实验结果原因"></a>实验结果原因</h1><img src="image-20230901214251767.png" alt="image-20230901214251767" style="zoom:33%;" />
+
+<h1 id="带用动量的梯度下降"><a href="#带用动量的梯度下降" class="headerlink" title="带用动量的梯度下降"></a>带用动量的梯度下降</h1><img src="image-20230902102529513.png" alt="image-20230902102529513" style="zoom:33%;" />
+
+
+
+<h1 id="自适应学习率算法"><a href="#自适应学习率算法" class="headerlink" title="自适应学习率算法"></a>自适应学习率算法</h1><img src="image-20230905201824912.png" alt="image-20230905201824912" style="zoom: 33%;" />
+
+
+
+<h1 id="卷积神经网络"><a href="#卷积神经网络" class="headerlink" title="卷积神经网络"></a>卷积神经网络</h1><p>就是通过训练找最好的卷积核和bias</p>
+<p>卷积神经网络（Convolutional Neural Network，CNN）的核心思想之一是学习最优的卷积核（也称为滤波器），而不是手动设计它们。CNN的层级结构包括多个卷积层和池化层，其中每个卷积层都包含多个卷积核。</p>
+<p>CNN通过反向传播和梯度下降等优化算法，自动地学习卷积核的权重，以最大程度地提取输入图像中的特征。这些特征可以是边缘、纹理、形状等，这些特征对于图像分类和识别等任务非常重要。</p>
+<p>所以，CNN不仅仅是找到最好的卷积核，而且还是学习适应任务的卷积核。这种自动化的特征学习是CNN在计算机视觉任务中取得成功的重要原因之一，因为它减少了手动特征工程的需求，使模型更具通用性和可适应性。</p>
+<img src="image-20230907215356860.png" alt="image-20230907215356860" style="zoom: 33%;" />
+
+<img src="image-20230907215931103.png" alt="image-20230907215931103" style="zoom: 33%;" />
+
+
+
+<img src="image-20230907220031484.png" alt="image-20230907220031484" style="zoom: 33%;" />
+
+<p>最大池化效果好于平均池化</p>
+<img src="image-20230907220210204.png" alt="image-20230907220210204" style="zoom: 33%;" />
+
+<p>上图7层神经网络</p>
+<p>每个卷积层后面基本都搭配一个ReLu，然后一般隔几层池化一次（非必须，alphago没有池化操作）</p>
+<p>FC：全连接层。卷积只是提取特征，最终分类还是要靠全连接层</p>
+<p>FC层与前面的层之后还有一个把特征图拉长成特征向量的过程。即 展平特征图</p>
+<img src="image-20230907220741804.png" alt="image-20230907220741804" style="zoom:33%;" />
+
+<h1 id="RNN"><a href="#RNN" class="headerlink" title="RNN"></a>RNN</h1><img src="image-20230916100352809.png" alt="image-20230916100352809" style="zoom: 33%;" />
+
+<p>LSTM可以解决RNN训练梯度消失的情况</p>
+<img src="image-20230916110753266.png" alt="image-20230916110753266" style="zoom:33%;" /></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://mizukiusami.github.io">mizukiusami</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://mizukiusami.github.io/2023/09/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AD%A6%E4%B9%A0/">https://mizukiusami.github.io/2023/09/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AD%A6%E4%B9%A0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://mizukiusami.github.io" target="_blank">mizukiusami</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AD%A6%E4%B9%A0/">人工智能学习</a></div><div class="post_share"><div class="social-share" data-image="https://w.wallhaven.cc/full/7p/wallhaven-7p9pp9.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/07/24/jvm%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><img class="next-cover" src="https://w.wallhaven.cc/full/2y/wallhaven-2yg7x9.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">jvm学习笔记</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">mizukiusami</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/MizukiUsami"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:sheephaoxin@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Sigmoid-Function"><span class="toc-number">1.</span> <span class="toc-text">Sigmoid Function</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pytorch%E8%AE%AD%E7%BB%83%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B"><span class="toc-number">2.</span> <span class="toc-text">pytorch训练代码示例</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NN"><span class="toc-number">3.</span> <span class="toc-text">NN</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD%E4%B8%8E%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD"><span class="toc-number">4.</span> <span class="toc-text">前向传播与反向传播</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%86%E7%B1%BB%E4%B8%8E%E5%9B%9E%E5%BD%92%E6%AF%94%E8%BE%83"><span class="toc-number">5.</span> <span class="toc-text">分类与回归比较</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%9A%E5%88%86%E7%B1%BB"><span class="toc-number">6.</span> <span class="toc-text">多分类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E7%9A%84%E9%80%89%E6%8B%A9"><span class="toc-number">7.</span> <span class="toc-text">损失函数的选择</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E5%B1%80%E9%99%90%E6%80%A7%E7%A0%B4%E5%B1%80"><span class="toc-number">8.</span> <span class="toc-text">逻辑回归的局限性破局</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C%E5%8E%9F%E5%9B%A0"><span class="toc-number">9.</span> <span class="toc-text">实验结果原因</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%A6%E7%94%A8%E5%8A%A8%E9%87%8F%E7%9A%84%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="toc-number">10.</span> <span class="toc-text">带用动量的梯度下降</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%87%AA%E9%80%82%E5%BA%94%E5%AD%A6%E4%B9%A0%E7%8E%87%E7%AE%97%E6%B3%95"><span class="toc-number">11.</span> <span class="toc-text">自适应学习率算法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="toc-number">12.</span> <span class="toc-text">卷积神经网络</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RNN"><span class="toc-number">13.</span> <span class="toc-text">RNN</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/09/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AD%A6%E4%B9%A0/" title="人工智能学习"><img src="https://w.wallhaven.cc/full/7p/wallhaven-7p9pp9.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="人工智能学习"/></a><div class="content"><a class="title" href="/2023/09/01/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AD%A6%E4%B9%A0/" title="人工智能学习">人工智能学习</a><time datetime="2023-09-01T13:09:52.000Z" title="发表于 2023-09-01 21:09:52">2023-09-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/07/24/jvm%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="jvm学习笔记"><img src="https://w.wallhaven.cc/full/2y/wallhaven-2yg7x9.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="jvm学习笔记"/></a><div class="content"><a class="title" href="/2023/07/24/jvm%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="jvm学习笔记">jvm学习笔记</a><time datetime="2023-07-24T04:52:21.000Z" title="发表于 2023-07-24 12:52:21">2023-07-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/07/22/%E4%BD%BF%E7%94%A8%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC%E6%9C%BA%E5%88%B6%E5%AE%9E%E7%8E%B0%E8%B7%A8%E6%A8%A1%E5%9D%97%E8%B0%83%E7%94%A8/" title="使用事件监听机制实现跨模块调用"><img src="https://ts1.cn.mm.bing.net/th/id/R-C.69dd8a82ca55bb1de4d0ffdbc9f4daf0?rik=NKOlnbGwjwMEkw&amp;riu=http%3a%2f%2fi1.3conline.com%2fimages%2fpiclib%2f201107%2f31%2fbatch%2f1%2f103987%2f1312116969924u40c1g4lg1.jpg&amp;ehk=fAsVeW%2foCuzT7UWQego4CAHK7BalfaOJkyTqNWcpbG4%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="使用事件监听机制实现跨模块调用"/></a><div class="content"><a class="title" href="/2023/07/22/%E4%BD%BF%E7%94%A8%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC%E6%9C%BA%E5%88%B6%E5%AE%9E%E7%8E%B0%E8%B7%A8%E6%A8%A1%E5%9D%97%E8%B0%83%E7%94%A8/" title="使用事件监听机制实现跨模块调用">使用事件监听机制实现跨模块调用</a><time datetime="2023-07-22T08:21:27.000Z" title="发表于 2023-07-22 16:21:27">2023-07-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/07/12/Nacos/" title="Nacos"><img src="https://www.leixue.com/uploads/2020/07/Nacos.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Nacos"/></a><div class="content"><a class="title" href="/2023/07/12/Nacos/" title="Nacos">Nacos</a><time datetime="2023-07-12T07:38:18.000Z" title="发表于 2023-07-12 15:38:18">2023-07-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/06/01/Redis/" title="Redis"><img src="https://www.leixue.com/uploads/2019/05/Redis.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Redis"/></a><div class="content"><a class="title" href="/2023/06/01/Redis/" title="Redis">Redis</a><time datetime="2023-06-01T06:17:40.000Z" title="发表于 2023-06-01 14:17:40">2023-06-01</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By mizukiusami</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my blog!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (true){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
